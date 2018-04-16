@@ -28,7 +28,7 @@
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <!-- nom de la classe au se situe le main (ATTENTION nom complet avec les packages) -->
-                                    <mainClass>"---Mettre nom de la classe ici---"</mainClass>
+                                    <mainClass>"mailPranksGenerator"</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
