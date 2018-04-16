@@ -36,7 +36,9 @@ public class SmtpClient implements ISmtpClient {
         output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
         System.out.println(input.readLine());
-        output.println("EHLO Moto");
+        // BEWARE !!!! --> Problem since here !
+        System.out.println("Test HELO");
+        output.println("HELO Moto");
         output.flush();
 
         String str;
