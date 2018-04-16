@@ -16,7 +16,7 @@ public class ConfigManager implements IConfigManager {
     private Properties properties;
 
     public ConfigManager() throws IOException {
-        properties = getProperties("./config/config.properties");
+        properties = getProperties("../config/config.properties");
     }
 
     public Properties getProperties(String fileName) throws IOException {
