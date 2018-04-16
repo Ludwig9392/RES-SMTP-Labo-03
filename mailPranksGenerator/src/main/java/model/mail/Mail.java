@@ -7,4 +7,9 @@ package model.mail;
  * @author Frueh Loïc
  */
 public class Mail {
+    private String from;
+    private String[] to;
+    private String[] cc;
+    private String subject;
+    private String message;
 }
