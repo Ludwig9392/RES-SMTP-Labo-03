@@ -69,6 +69,13 @@ public class SmtpClient implements ISmtpClient {
             System.out.println();
         }
 
+        for (String cc : email.getCc()) {
+            output.print(SmtpProtocol.CMD_RCPT + cc + SmtpProtocol.RETURN);
+            output.flush();
+            System.out.println(input.readLine());
+            System.out.println();
+        }
+
         System.out.println("DATA -----------------------------");
         output.print(SmtpProtocol.CMD_DATA + SmtpProtocol.RETURN);
         output.flush();

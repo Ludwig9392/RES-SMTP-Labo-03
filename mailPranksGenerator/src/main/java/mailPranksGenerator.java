@@ -26,9 +26,11 @@ public class mailPranksGenerator {
             prank.setFakeSender(new Person("Loic", "Frueh","loic.frueh@gmail.com"));
 
             Group to = new Group();
-            to.addMultiplePersons(new Person("qwe", "qas", "thor@gmail.com"),
-                    new Person("aaa", "bbb", "hulk@gmail.com"), new Person("qqq", "wwww", "ironman@gmail.com"),
-                    new Person("ddd", "we", "strange@gmail.com"));
+            to.addMultiplePersons(
+                    new Person("qwe", "qas", "thor@gmail.com"),
+                    new Person("aaa", "bbb", "hulk@gmail.com"),
+                    new Person("qqq", "wwww", "ironman@gmail.com")
+            );
 
             prank.setReceivers(to);
 
