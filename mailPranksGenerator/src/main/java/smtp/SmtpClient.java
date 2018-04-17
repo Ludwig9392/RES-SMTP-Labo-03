@@ -36,7 +36,7 @@ public class SmtpClient implements ISmtpClient {
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-        // Second implementation test for the partial connection with the SMTP Server
+        // Test of implementation for a full connection with the SMTP Server
 
         System.out.println(input.readLine());
         System.out.println("Test EHLO ------------------------");
@@ -64,6 +64,31 @@ public class SmtpClient implements ISmtpClient {
 
         System.out.println("DATA -----------------------------");
         output.print("DATA \r\n");
+        output.flush();
+        System.out.println(input.readLine());
+        System.out.println();
+
+        System.out.println("Message -----------------------------");
+        output.print("From: " + email.getFrom() + "\r\n");
+        output.flush();
+        output.print("To: " + email.getTo()[0] + "\r\n");
+        output.flush();
+        output.print("Cc: " + email.getCc()[0] + "\r\n");
+        output.flush();
+        output.print("Subject: " + email.getSubject() + "\r\n");
+        output.flush();
+        output.print("\r\n");
+        output.flush();
+
+        output.print(email.getMessage());
+        output.flush();
+        output.print("\r\n.\r\n");
+        output.flush();
+        System.out.println(input.readLine());
+        System.out.println();
+
+        System.out.println("Quit -----------------------------------");
+        output.print("quit \r\n");
         output.flush();
         System.out.println(input.readLine());
         System.out.println();

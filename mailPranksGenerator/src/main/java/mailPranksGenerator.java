@@ -13,7 +13,7 @@ public class mailPranksGenerator {
 
 
     public static void main(String[] args) {
-        // Second Test of partial connection with the SMTP server
+        // Test of a fully connection with the SMTP server (send a email)
         try {
             config = new ConfigManager();
             client = new SmtpClient(config);
