@@ -36,11 +36,11 @@ public class SmtpClient implements ISmtpClient {
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-        // Test of implementation for a full connection with the SMTP Server
+        // Test of implementation for a full connection with the SMTP Server (with multiple receiver and CCs)
 
         System.out.println(input.readLine());
         System.out.println("Test EHLO ------------------------");
-        output.print("EHLO Moto \r\n"); // Beware: do not use println() --> not recognized by server
+        output.print(SmtpProtocol.CMD_HELLO + " Moto" + SmtpProtocol.RETURN); // Beware: do not use println() --> not recognized by server
         output.flush();
 
         String serveurResponse;
@@ -51,44 +51,54 @@ public class SmtpClient implements ISmtpClient {
         System.out.println();
 
         System.out.println("MAIL FROM ------------------------");
-        output.print("MAIL FROM: " + email.getFrom() + "\r\n");
+        output.print(SmtpProtocol.CMD_MAIL + email.getFrom() + SmtpProtocol.RETURN);
         output.flush();
         System.out.println(input.readLine());
         System.out.println();
 
         System.out.println("RCPT TO --------------------------");
-        output.print("RCPT TO: " + email.getTo() + "\r\n");
-        output.flush();
-        System.out.println(input.readLine());
-        System.out.println();
+        for (String receiver : email.getTo()) {
+            output.print(SmtpProtocol.CMD_RCPT + receiver + SmtpProtocol.RETURN);
+            output.flush();
+            System.out.println(input.readLine());
+            System.out.println();
+        }
 
         System.out.println("DATA -----------------------------");
-        output.print("DATA \r\n");
+        output.print(SmtpProtocol.CMD_DATA + SmtpProtocol.RETURN);
         output.flush();
         System.out.println(input.readLine());
         System.out.println();
 
         System.out.println("Message -----------------------------");
-        output.print("From: " + email.getFrom() + "\r\n");
+        output.print(SmtpProtocol.FROM + email.getFrom() + SmtpProtocol.RETURN);
         output.flush();
-        output.print("To: " + email.getTo()[0] + "\r\n");
+        System.out.println("to !!!!!!!");
+        output.print(SmtpProtocol.TO + email.getTo()[0] + SmtpProtocol.RETURN);
         output.flush();
-        output.print("Cc: " + email.getCc()[0] + "\r\n");
+        System.out.println("cc !!!!!!!");
+        for (String cc : email.getCc()) {
+            output.print(SmtpProtocol.CC + cc + SmtpProtocol.RETURN);
+            output.flush();
+        }
+        System.out.println("subject !!!!!!!");
+        output.print(SmtpProtocol.SUBJECT + email.getSubject() + SmtpProtocol.RETURN);
         output.flush();
-        output.print("Subject: " + email.getSubject() + "\r\n");
-        output.flush();
-        output.print("\r\n");
+        output.print(SmtpProtocol.RETURN);
         output.flush();
 
+        System.out.println("body !!!!!!!");
         output.print(email.getMessage());
         output.flush();
-        output.print("\r\n.\r\n");
+
+        System.out.println("end !!!!!!!");
+        output.print(SmtpProtocol.END_MESSAGE);
         output.flush();
         System.out.println(input.readLine());
         System.out.println();
 
         System.out.println("Quit -----------------------------------");
-        output.print("quit \r\n");
+        output.print(SmtpProtocol.CMD_QUIT + SmtpProtocol.RETURN);
         output.flush();
         System.out.println(input.readLine());
         System.out.println();

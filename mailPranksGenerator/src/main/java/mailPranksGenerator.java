@@ -13,15 +13,15 @@ public class mailPranksGenerator {
 
 
     public static void main(String[] args) {
-        // Test of a fully connection with the SMTP server (send a email)
+        // Test of a fully connection with the SMTP server (send a email with multiple receiver and CCs)
         try {
             config = new ConfigManager();
             client = new SmtpClient(config);
 
             // Email Test:
-            email.setFrom("loic.frueh@gmail.com");
-            email.setTo(new String[] {"barack.obama@gmail.com"});
-            email.setCc(new String[] {"loic.frueh@gmail.com"});
+            email.setFrom("donald.trump@gmail.com");
+            email.setTo(new String[] {"barack.obama@gmail.com", "michel.obama@gmail.com", "chirac.jacques@yahoo.fr"});
+            email.setCc(new String[] {"chirac.jacques@yahoo.fr", "michel.obama@gmail.com"});
             email.setSubject("Nuclear Blast");
             email.setMessage("I will nuke your face, bastard !");
 
