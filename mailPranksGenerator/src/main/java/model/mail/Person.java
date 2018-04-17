@@ -14,6 +14,19 @@ public class Person {
     private String lastName;
     private String email;
 
+
+    public Person() {}
+
+    public Person(String email) {
+        int splitIndex = email.indexOf('@');
+        String name = email.substring(0, splitIndex);
+        String[] names = name.split("\\.");
+
+        firstName = names[0].substring(0,1).toLowerCase() + names[0].substring(1);
+        lastName = names[1].substring(0,1).toLowerCase() + names[1].substring(1);
+        this.email = email;
+    }
+
     public Person (String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,5 +56,5 @@ public class Person {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
 }
