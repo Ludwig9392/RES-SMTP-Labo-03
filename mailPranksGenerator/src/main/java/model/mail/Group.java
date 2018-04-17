@@ -1,6 +1,7 @@
 package model.mail;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +36,18 @@ public class Group {
 
     public void addMultiplePersons(List<Person> persons){
         group.addAll(persons);
+    }
+
+    public Person removePerson(int index) {
+        if (index < getNumberOfPerson()){
+            return group.remove(index);
+        }
+
+        return null;
+    }
+
+    public void shuffle() {
+        Collections.shuffle(group);
     }
 
     public List<Person> getGroup() {

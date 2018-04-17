@@ -95,11 +95,6 @@ public class SmtpClient implements ISmtpClient {
             output.print(SmtpProtocol.CC + cc + SmtpProtocol.RETURN);
             output.flush();
         }
-        System.out.println("subject !!!!!!!");
-        output.print(SmtpProtocol.SUBJECT + email.getSubject() + SmtpProtocol.RETURN);
-        output.flush();
-        output.print(SmtpProtocol.RETURN);
-        output.flush();
 
         System.out.println("body !!!!!!!");
         output.print(email.getMessage());

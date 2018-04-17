@@ -23,14 +23,14 @@ public class Person {
         String[] names = name.split("\\.");
 
         if (names.length > 1) {
-            firstName = names[0].substring(0, 1).toLowerCase() + names[0].substring(1);
-            lastName = names[1].substring(0, 1).toLowerCase() + names[1].substring(1);
+            firstName = names[0].substring(0, 1).toUpperCase() + names[0].substring(1);
+            lastName = names[1].substring(0, 1).toUpperCase() + names[1].substring(1);
         }
         else {
-            firstName = name;
+            firstName = name.substring(0,1) + name.substring(1);
             lastName = "";
         }
-        
+
         this.email = email;
     }
 

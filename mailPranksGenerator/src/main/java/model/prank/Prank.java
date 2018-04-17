@@ -95,7 +95,7 @@ public class Prank {
 
         email.setCc(cc.toArray(new String[cc.size()]));
 
-        email.setMessage(message + SmtpProtocol.RETURN + SmtpProtocol.RETURN + fakeSender.getLastName() + " " + fakeSender.getFirstName());
+        email.setMessage(message + SmtpProtocol.RETURN + fakeSender.getLastName() + " " + fakeSender.getFirstName());
 
         return email;
 

@@ -17,32 +17,22 @@ public class mailPranksGenerator {
 
 
     public static void main(String[] args) {
-        // Test of the correct prank to mail generation
+        // Test of the correct config file importation
         try {
             config = new ConfigManager();
             client = new SmtpClient(config);
 
-            // Prank Test:
-            prank.setFakeSender(new Person("Loic", "Frueh","loic.frueh@gmail.com"));
+            Group victims = config.getVictims();
+            victims.shuffle();
+            prank.setFakeSender(victims.removePerson(0));
+            prank.setReceivers(victims);
 
-            Group to = new Group();
-            to.addMultiplePersons(
-                    new Person("qwe", "qas", "thor@gmail.com"),
-                    new Person("aaa", "bbb", "hulk@gmail.com"),
-                    new Person("qqq", "wwww", "ironman@gmail.com")
-            );
-
-            prank.setReceivers(to);
-
-            Group cc = new Group();
-            cc.addMultiplePersons(new Person("ddd", "we", "strange@gmail.com"));
-
+            Group cc = config.getWitnesses();
             prank.setWitnesses(cc);
 
-            prank.setMessage("Ceci est un prank haha et Hulk est bien plus fort que Thor !");
+            prank.setMessage(config.getMessages().remove(0));
 
             email = prank.toForgedMail();
-            email.setSubject("Un sujet important");
             client.sendEmail(email);
         } catch (IOException e) {
             e.printStackTrace();
