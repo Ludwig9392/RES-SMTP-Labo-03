@@ -7,6 +7,8 @@ package smtp;
  */
 
 public class SmtpProtocol {
+    public final static int DEFAULT_PORT = 25;
+
     public final static String CMD_HELLO = "EHLO";
     public final static String CMD_MAIL = "MAIL FROM:";
     public final static String CMD_RCPT = "RCPT TO:";
