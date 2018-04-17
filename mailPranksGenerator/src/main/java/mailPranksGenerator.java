@@ -1,5 +1,8 @@
 import config.ConfigManager;
+import model.mail.Group;
 import model.mail.Mail;
+import model.mail.Person;
+import model.prank.Prank;
 import smtp.SmtpClient;
 
 import java.io.IOException;
@@ -8,24 +11,36 @@ public class mailPranksGenerator {
 
     // Attributes Test
     private static SmtpClient client;
-    private static Mail email = new Mail();
     private static ConfigManager config;
+    private static Prank prank = new Prank();
 
 
     public static void main(String[] args) {
-        // Test of a fully connection with the SMTP server (send a email with multiple receiver and CCs)
+        // Test of the correct prank to mail generation
         try {
             config = new ConfigManager();
             client = new SmtpClient(config);
 
-            // Email Test:
-            email.setFrom("donald.trump@gmail.com");
-            email.setTo(new String[] {"barack.obama@gmail.com", "michel.obama@gmail.com", "chirac.jacques@yahoo.fr"});
-            email.setCc(new String[] {"chirac.jacques@yahoo.fr", "michel.obama@gmail.com"});
-            email.setSubject("Nuclear Blast");
-            email.setMessage("I will nuke your face, bastard !");
+            // Prank Test:
+            prank.setFakeSender(new Person("Loic", "Frueh","loic.frueh@gmail.com"));
 
-            client.sendEmail(email);
+            Group to = new Group();
+            to.addMultiplePersons(new Person("qwe", "qas", "thor@gmail.com"),
+                    new Person("aaa", "bbb", "hulk@gmail.com"), new Person("qqq", "wwww", "ironman@gmail.com"),
+                    new Person("ddd", "we", "strange@gmail.com"));
+
+            prank.setReceivers(to);
+
+            Group cc = new Group();
+            to.addMultiplePersons(new Person("aaa", "bbb", "hulk@gmail.com"),
+                    new Person("ddd", "we", "strange@gmail.com"));
+
+            prank.setWitnesses(cc);
+
+            prank.setMessage("Ceci est un prank haha et Hulk est bien plus fort que Thor !");
+
+
+            client.sendEmail(prank.toForgedMail());
         } catch (IOException e) {
             e.printStackTrace();
         }
