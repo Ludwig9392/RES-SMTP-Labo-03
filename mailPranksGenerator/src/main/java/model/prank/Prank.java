@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class Prank {
 
-    private Person fakeSender;
-    private Group receivers;
-    private Group witnesses;
+    private Person fakeSender = new Person();
+    private Group receivers = new Group();
+    private Group witnesses = new Group();
 
     private String message;
 
@@ -68,7 +68,7 @@ public class Prank {
         this.receivers.addMultiplePersons(receivers.getGroup());
     }
 
-    public void addWtiness(Person witness) {
+    public void addWitness(Person witness) {
         receivers.addPerson(witness);
     }
 
@@ -78,7 +78,7 @@ public class Prank {
 
     public Mail toForgedMail() {
         Mail email = new Mail();
-        
+
         email.setFrom(fakeSender.getEmail());
 
         List<String> to = new ArrayList<String>();
@@ -86,18 +86,19 @@ public class Prank {
             to.add(p.getEmail());
         }
 
-        email.setTo((String[])to.toArray());
+        email.setTo(to.toArray(new String[to.size()]));
 
         List<String> cc = new ArrayList<String>();
-        for (Person p : receivers.getGroup()) {
-            to.add(p.getEmail());
+        for (Person p : witnesses.getGroup()) {
+            cc.add(p.getEmail());
         }
 
-        email.setCc((String[])cc.toArray());
+        email.setCc(cc.toArray(new String[cc.size()]));
 
-        email.setMessage(message + SmtpProtocol.RETURN + fakeSender.getLastName() + " " + fakeSender.getFirstName());
+        email.setMessage(message + SmtpProtocol.RETURN + SmtpProtocol.RETURN + fakeSender.getLastName() + " " + fakeSender.getFirstName());
 
         return email;
+
     }
 
 

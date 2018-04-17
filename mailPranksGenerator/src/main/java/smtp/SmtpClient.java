@@ -15,11 +15,16 @@ import java.util.Objects;
 public class SmtpClient implements ISmtpClient {
 
     private Socket socket;
-    private int serverListenPort;
+    private int serverListenPort = SmtpProtocol.DEFAULT_PORT;
     private String serverAdresse;
 
     private BufferedReader input;
     private PrintWriter output;
+
+
+    public SmtpClient(String serverAdresse) {
+        this.serverAdresse = serverAdresse;
+    }
 
     public SmtpClient(String serverAdresse, int serverListenPort) {
         this.serverAdresse = serverAdresse;
@@ -74,8 +79,10 @@ public class SmtpClient implements ISmtpClient {
         output.print(SmtpProtocol.FROM + email.getFrom() + SmtpProtocol.RETURN);
         output.flush();
         System.out.println("to !!!!!!!");
-        output.print(SmtpProtocol.TO + email.getTo()[0] + SmtpProtocol.RETURN);
-        output.flush();
+        for (String to : email.getTo()) {
+            output.print(SmtpProtocol.TO + to + SmtpProtocol.RETURN);
+            output.flush();
+        }
         System.out.println("cc !!!!!!!");
         for (String cc : email.getCc()) {
             output.print(SmtpProtocol.CC + cc + SmtpProtocol.RETURN);

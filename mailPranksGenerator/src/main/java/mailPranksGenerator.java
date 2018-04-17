@@ -13,6 +13,7 @@ public class mailPranksGenerator {
     private static SmtpClient client;
     private static ConfigManager config;
     private static Prank prank = new Prank();
+    private static Mail email;
 
 
     public static void main(String[] args) {
@@ -32,15 +33,15 @@ public class mailPranksGenerator {
             prank.setReceivers(to);
 
             Group cc = new Group();
-            to.addMultiplePersons(new Person("aaa", "bbb", "hulk@gmail.com"),
-                    new Person("ddd", "we", "strange@gmail.com"));
+            cc.addMultiplePersons(new Person("ddd", "we", "strange@gmail.com"));
 
             prank.setWitnesses(cc);
 
             prank.setMessage("Ceci est un prank haha et Hulk est bien plus fort que Thor !");
 
-
-            client.sendEmail(prank.toForgedMail());
+            email = prank.toForgedMail();
+            email.setSubject("Un sujet important");
+            client.sendEmail(email);
         } catch (IOException e) {
             e.printStackTrace();
         }
