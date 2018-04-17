@@ -22,8 +22,15 @@ public class Person {
         String name = email.substring(0, splitIndex);
         String[] names = name.split("\\.");
 
-        firstName = names[0].substring(0,1).toLowerCase() + names[0].substring(1);
-        lastName = names[1].substring(0,1).toLowerCase() + names[1].substring(1);
+        if (names.length > 1) {
+            firstName = names[0].substring(0, 1).toLowerCase() + names[0].substring(1);
+            lastName = names[1].substring(0, 1).toLowerCase() + names[1].substring(1);
+        }
+        else {
+            firstName = name;
+            lastName = "";
+        }
+        
         this.email = email;
     }
 
