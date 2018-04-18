@@ -1,11 +1,10 @@
 package smtp;
 
-import config.ConfigManager;
+import config.IConfigManager;
 import model.mail.Mail;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Objects;
 
 /**
  * A SMTP client that can send e-mails through a SMTP server.
@@ -31,7 +30,7 @@ public class SmtpClient implements ISmtpClient {
         this.serverListenPort = serverListenPort;
     }
 
-    public SmtpClient(ConfigManager config) {
+    public SmtpClient(IConfigManager config) {
         this.serverAdresse = config.getSmtpServerAdresse();
         this.serverListenPort = config.getSmtpServerListenPort();
     }
@@ -45,11 +44,11 @@ public class SmtpClient implements ISmtpClient {
 
         System.out.println(input.readLine());
         System.out.println("Test EHLO ------------------------");
-        output.print(SmtpProtocol.CMD_HELLO + " Moto" + SmtpProtocol.RETURN); // Beware: do not use println() --> not recognized by server
+        output.print(SmtpProtocol.CMD_HELLO + " Kitty" + SmtpProtocol.RETURN); // Beware: do not use println() --> not recognized by server
         output.flush();
 
         String serveurResponse;
-        while(!Objects.equals((serveurResponse = input.readLine()).substring(0,4), "250 ")) {
+        while(!(serveurResponse = input.readLine()).substring(0,4).equals("250 ")) {
             System.out.println(serveurResponse);
         }
         System.out.println(serveurResponse);
@@ -95,6 +94,9 @@ public class SmtpClient implements ISmtpClient {
             output.print(SmtpProtocol.CC + cc + SmtpProtocol.RETURN);
             output.flush();
         }
+
+        output.print(SmtpProtocol.ENCODAGE_UTF8 + SmtpProtocol.RETURN);
+        output.flush();
 
         System.out.println("body !!!!!!!");
         output.print(email.getMessage());

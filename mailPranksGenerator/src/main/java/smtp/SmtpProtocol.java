@@ -22,6 +22,7 @@ public class SmtpProtocol {
 
     public final static String RETURN = "\r\n";
     public final static String END_MESSAGE = "\r\n.\r\n";
+    public final static String ENCODAGE_UTF8 = "Content-Type: text/plain; charset=UTF-8";
 
 
 }
