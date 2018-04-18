@@ -19,7 +19,6 @@ public class Prank {
     private Person fakeSender = new Person();
     private Group receivers = new Group();
     private Group witnesses = new Group();
-
     private String message;
 
     public Person getFakeSender() {

@@ -1,39 +1,26 @@
 import config.ConfigManager;
-import model.mail.Group;
-import model.mail.Mail;
-import model.mail.Person;
+import config.IConfigManager;
 import model.prank.Prank;
+import model.prank.PrankGenerator;
+import smtp.ISmtpClient;
 import smtp.SmtpClient;
-
 import java.io.IOException;
+import java.util.List;
 
 public class mailPranksGenerator {
 
-    // Attributes Test
-    private static SmtpClient client;
-    private static ConfigManager config;
-    private static Prank prank = new Prank();
-    private static Mail email;
-
-
     public static void main(String[] args) {
-        // Test of the correct config file importation
+        // Test of the PrankGenerator class
         try {
-            config = new ConfigManager();
-            client = new SmtpClient(config);
+            IConfigManager config = new ConfigManager();
+            PrankGenerator generator = new PrankGenerator(config);
+            List<Prank> pranks = generator.generatePranks();
 
-            Group victims = config.getVictims();
-            victims.shuffle();
-            prank.setFakeSender(victims.removePerson(0));
-            prank.setReceivers(victims);
+            ISmtpClient client = new SmtpClient(config);
+            for (Prank prank : pranks) {
+                client.sendEmail(prank.toForgedMail());
+            }
 
-            Group cc = config.getWitnesses();
-            prank.setWitnesses(cc);
-
-            prank.setMessage(config.getMessages().remove(0));
-
-            email = prank.toForgedMail();
-            client.sendEmail(email);
         } catch (IOException e) {
             e.printStackTrace();
         }

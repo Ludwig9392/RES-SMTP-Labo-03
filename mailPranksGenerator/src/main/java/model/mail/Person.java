@@ -27,7 +27,7 @@ public class Person {
             lastName = names[1].substring(0, 1).toUpperCase() + names[1].substring(1);
         }
         else {
-            firstName = name.substring(0,1) + name.substring(1);
+            firstName = name.substring(0,1).toUpperCase() + name.substring(1);
             lastName = "";
         }
 
