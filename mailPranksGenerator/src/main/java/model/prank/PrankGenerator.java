@@ -2,6 +2,8 @@ package model.prank;
 
 import config.IConfigManager;
 import model.mail.Group;
+import model.mail.Person;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +45,12 @@ public class PrankGenerator {
         int groupNumber = 0;
         LOG.info("BEGIN : Add victims to the prank groups.");
         while (victims.getNumberOfPerson() > 0) {
-            groupList.get(groupNumber).addPerson(victims.removePerson(0));
+            Person p = victims.removePerson(0);
+            if(p == null){
+                LOG.log(Level.SEVERE, "The removePerson has returned a null object.");
+            }else {
+                groupList.get(groupNumber).addPerson(p);
+            }
             groupNumber = (groupNumber + 1) % numberOfGroups;
         }
         LOG.info("END : Add victims to the prank groups.");

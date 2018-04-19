@@ -64,7 +64,7 @@ public class Group {
      * @return the person that has been removed or null if it can't be found.
      */
     public Person removePerson(int index) {
-        if (0 < index && index < getNumberOfPerson()){
+        if (0 <= index && index < getNumberOfPerson()){
             return group.remove(index);
         }
         return null;
