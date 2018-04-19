@@ -1,6 +1,6 @@
 package smtp;
 
-import com.sun.istack.internal.NotNull;
+
 import config.IConfigManager;
 import model.mail.Mail;
 import java.io.*;
@@ -45,7 +45,7 @@ public class SmtpClient implements ISmtpClient {
      * Constructor for an advanced smtp client.
      * @param config the IConfigManager to create the smtp client. Must exist !
      */
-    public SmtpClient(@NotNull IConfigManager config) {
+    public SmtpClient(IConfigManager config) {
         this.serverAddress = config.getSmtpServerAddress();
         this.serverListenPort = config.getSmtpServerListenPort();
     }
