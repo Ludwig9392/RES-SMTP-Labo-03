@@ -3,7 +3,7 @@ package smtp;
 /**
  * This class defines constants for the SMTP Protocol
  *
- * @author Frueh Loïc
+ * @author Frueh Loïc, Dejvid Muaremi
  */
 
 public class SmtpProtocol {
