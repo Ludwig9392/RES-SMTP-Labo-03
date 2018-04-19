@@ -6,10 +6,19 @@ import smtp.ISmtpClient;
 import smtp.SmtpClient;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.*;
 
 public class mailPranksGenerator {
+    private static final Logger LOG = Logger.getLogger(mailPranksGenerator.class.getName());
 
     public static void main(String[] args) {
+        /*
+         * I prefer to have LOG output on a single line, it's easier to read. Being able
+         * to change the formatting of console outputs is one of the reasons why it is
+         * better to use a Logger rather than using System.out.println
+         */
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
+        
         // Test of the PrankGenerator class
         try {
             IConfigManager config = new ConfigManager();
@@ -22,6 +31,7 @@ public class mailPranksGenerator {
             }
 
         } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Could not send the pranks. {0}", e.getMessage());
             e.printStackTrace();
         }
     }
