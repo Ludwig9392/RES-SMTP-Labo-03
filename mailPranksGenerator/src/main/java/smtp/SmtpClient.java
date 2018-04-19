@@ -33,7 +33,7 @@ public class SmtpClient implements ISmtpClient {
     }
 
     public SmtpClient(IConfigManager config) {
-        this.serverAdresse = config.getSmtpServerAdresse();
+        this.serverAdresse = config.getSmtpServerAddress();
         this.serverListenPort = config.getSmtpServerListenPort();
     }
 

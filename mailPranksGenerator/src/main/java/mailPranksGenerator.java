@@ -1,9 +1,6 @@
-import config.ConfigManager;
-import config.IConfigManager;
-import model.prank.Prank;
-import model.prank.PrankGenerator;
-import smtp.ISmtpClient;
-import smtp.SmtpClient;
+import config.*;
+import model.prank.*;
+import smtp.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.*;

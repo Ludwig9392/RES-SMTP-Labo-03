@@ -53,7 +53,7 @@ public class ConfigManager implements IConfigManager {
      * Get the address of the smtp server.
      * @return the address of the server in a string.
      */
-    public String getSmtpServerAdresse() {
+    public String getSmtpServerAddress() {
         return properties.getProperty("smtpServer");
     }
     
