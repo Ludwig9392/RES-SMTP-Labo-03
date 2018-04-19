@@ -1,8 +1,8 @@
 package smtp;
 
+import com.sun.istack.internal.NotNull;
 import config.IConfigManager;
 import model.mail.Mail;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.logging.*;
@@ -10,35 +10,53 @@ import java.util.logging.*;
 /**
  * A SMTP client that can send e-mails through a SMTP server.
  *
- * @author Frueh Loïc
+ * @author Frueh Loïc, Dejvid Muaremi
  */
 public class SmtpClient implements ISmtpClient {
     private static final Logger LOG = Logger.getLogger(SmtpClient.class.getName());
 
     private Socket socket;
     private int serverListenPort = SmtpProtocol.DEFAULT_PORT;
-    private String serverAdresse;
+    private String serverAddress;
 
     private BufferedReader input;
     private PrintWriter output;
-
-
-    public SmtpClient(String serverAdresse) {
-        this.serverAdresse = serverAdresse;
+    
+    
+    /***
+     * Constructor for a simple smtp client. It only take a server address.
+     * @param serverAddress the address of the smtp server.
+     */
+    public SmtpClient(String serverAddress) {
+        this.serverAddress = serverAddress;
     }
-
-    public SmtpClient(String serverAdresse, int serverListenPort) {
-        this.serverAdresse = serverAdresse;
+    
+    /***
+     * Constructor for a simple smtp client. It needs a smtp server address and listening port.
+     * @param serverAddress the address of the smtp server.
+     * @param serverListenPort the listening port of the smtp server.
+     */
+    public SmtpClient(String serverAddress, int serverListenPort) {
+        this.serverAddress = serverAddress;
         this.serverListenPort = serverListenPort;
     }
-
-    public SmtpClient(IConfigManager config) {
-        this.serverAdresse = config.getSmtpServerAddress();
+    
+    /***
+     * Constructor for an advanced smtp client.
+     * @param config the IConfigManager to create the smtp client. Must exist !
+     */
+    public SmtpClient(@NotNull IConfigManager config) {
+        this.serverAddress = config.getSmtpServerAddress();
         this.serverListenPort = config.getSmtpServerListenPort();
     }
-
+    
+    /***
+     * Send an email through a socket to a smtp server using a writer and reader.
+     * @param email the email to send to a smtp server.
+     * @throws IOException if the socket can't be created or if reader or writer fail.
+     */
     public void sendEmail(Mail email) throws IOException {
-        socket = new Socket(serverAdresse, serverListenPort);
+        socket = new Socket(serverAddress, serverListenPort);
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
