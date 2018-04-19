@@ -8,6 +8,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.*;
 
+/***
+ * This application is used to create pranks from a config file.
+ * Then these pranks are used to send emails.
+ * The emails are sent from a victim to a list of victims.
+ */
 public class mailPranksGenerator {
     private static final Logger LOG = Logger.getLogger(mailPranksGenerator.class.getName());
 
@@ -19,7 +24,6 @@ public class mailPranksGenerator {
          */
         System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
         
-        // Test of the PrankGenerator class
         try {
             IConfigManager config = new ConfigManager();
             PrankGenerator generator = new PrankGenerator(config);
