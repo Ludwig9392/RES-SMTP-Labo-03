@@ -30,9 +30,9 @@ public class ConfigManager implements IConfigManager {
      * @throws IOException when it can't read one of the config files.
      */
     public ConfigManager() throws IOException {
-        properties = getProperties("./config/config.properties");
-        victims = loadVictimsFile("./config/victims");
-        messages = loadMessagesFile("./config/messages");
+        properties = getProperties("../mailPranksGenerator/config/config.properties");
+        victims = loadVictimsFile("../mailPranksGenerator/config/victims");
+        messages = loadMessagesFile("../mailPranksGenerator/config/messages");
     }
     
     /***
