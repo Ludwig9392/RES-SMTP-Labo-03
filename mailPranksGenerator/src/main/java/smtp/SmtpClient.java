@@ -5,6 +5,7 @@ import model.mail.Mail;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.*;
 
 /**
  * A SMTP client that can send e-mails through a SMTP server.
@@ -12,6 +13,7 @@ import java.net.Socket;
  * @author Frueh Loïc
  */
 public class SmtpClient implements ISmtpClient {
+    private static final Logger LOG = Logger.getLogger(SmtpClient.class.getName());
 
     private Socket socket;
     private int serverListenPort = SmtpProtocol.DEFAULT_PORT;
@@ -42,54 +44,50 @@ public class SmtpClient implements ISmtpClient {
 
         // Test of implementation for a full connection with the SMTP Server (with multiple receiver and CCs)
 
-        System.out.println(input.readLine());
-        System.out.println("Test EHLO ------------------------");
-        output.print(SmtpProtocol.CMD_HELLO + " Kitty" + SmtpProtocol.RETURN); // Beware: do not use println() --> not recognized by server
+        LOG.log(Level.INFO, input.readLine());
+        LOG.info("Test EHLO ------------------------");
+        // Beware: Do not use println() --> not recognized by server
+        output.print(SmtpProtocol.CMD_HELLO + " Kitty" + SmtpProtocol.RETURN);
         output.flush();
 
-        String serveurResponse;
-        while(!(serveurResponse = input.readLine()).substring(0,4).equals("250 ")) {
-            System.out.println(serveurResponse);
+        String serverResponse;
+        while(!(serverResponse = input.readLine()).substring(0,4).equals("250 ")) {
+            LOG.log(Level.INFO, serverResponse);
         }
-        System.out.println(serveurResponse);
-        System.out.println();
-
-        System.out.println("MAIL FROM ------------------------");
+        LOG.log(Level.INFO, serverResponse);
+    
+        LOG.info("MAIL FROM ------------------------");
         output.print(SmtpProtocol.CMD_MAIL + email.getFrom() + SmtpProtocol.RETURN);
         output.flush();
-        System.out.println(input.readLine());
-        System.out.println();
-
-        System.out.println("RCPT TO --------------------------");
+        LOG.log(Level.INFO, input.readLine());
+    
+        LOG.info("RCPT TO --------------------------");
         for (String receiver : email.getTo()) {
             output.print(SmtpProtocol.CMD_RCPT + receiver + SmtpProtocol.RETURN);
             output.flush();
-            System.out.println(input.readLine());
-            System.out.println();
+            LOG.log(Level.INFO, input.readLine());
         }
 
         for (String cc : email.getCc()) {
             output.print(SmtpProtocol.CMD_RCPT + cc + SmtpProtocol.RETURN);
             output.flush();
-            System.out.println(input.readLine());
-            System.out.println();
+            LOG.log(Level.INFO, input.readLine());
         }
 
-        System.out.println("DATA -----------------------------");
+        LOG.info("DATA -----------------------------");
         output.print(SmtpProtocol.CMD_DATA + SmtpProtocol.RETURN);
         output.flush();
-        System.out.println(input.readLine());
-        System.out.println();
+        LOG.log(Level.INFO, input.readLine());
 
-        System.out.println("Message -----------------------------");
+        LOG.info("Message -----------------------------");
         output.print(SmtpProtocol.FROM + email.getFrom() + SmtpProtocol.RETURN);
         output.flush();
-        System.out.println("to !!!!!!!");
+        LOG.log(Level.CONFIG,"to");
         for (String to : email.getTo()) {
             output.print(SmtpProtocol.TO + to + SmtpProtocol.RETURN);
             output.flush();
         }
-        System.out.println("cc !!!!!!!");
+        LOG.log(Level.CONFIG, "cc");
         for (String cc : email.getCc()) {
             output.print(SmtpProtocol.CC + cc + SmtpProtocol.RETURN);
             output.flush();
@@ -98,20 +96,18 @@ public class SmtpClient implements ISmtpClient {
         output.print(SmtpProtocol.ENCODAGE_UTF8 + SmtpProtocol.RETURN);
         output.flush();
 
-        System.out.println("body !!!!!!!");
+        LOG.log(Level.CONFIG,"body");
         output.print(email.getMessage());
         output.flush();
-
-        System.out.println("end !!!!!!!");
+    
+        LOG.log(Level.CONFIG,"end");
         output.print(SmtpProtocol.END_MESSAGE);
         output.flush();
-        System.out.println(input.readLine());
-        System.out.println();
+        LOG.log(Level.INFO, input.readLine());
 
-        System.out.println("Quit -----------------------------------");
+        LOG.info("Quit -----------------------------------");
         output.print(SmtpProtocol.CMD_QUIT + SmtpProtocol.RETURN);
         output.flush();
-        System.out.println(input.readLine());
-        System.out.println();
+        LOG.log(Level.INFO, input.readLine());
     }
 }
