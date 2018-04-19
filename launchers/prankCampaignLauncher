@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# execution of the jar launcher
+java -jar ../mailPranksGenerator/target/mailPranksGenerator-1.0-SNAPSHOT-launcher.jar
+
+

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Launch of $0 ..."
+
+#Generation de l'image à partir du Dockerfile
+echo "Generation of the Docker image...........................................|"
+sudo docker build -t mockserver .
+
+#Launch of the Docker container
+echo "Launch of the Docker container...........................................|"
+sudo docker run -p $1:$1 -p 8282:8282 mockserver -p $1
