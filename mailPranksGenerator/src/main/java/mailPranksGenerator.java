@@ -12,6 +12,8 @@ import java.util.logging.*;
  * This application is used to create pranks from a config file.
  * Then these pranks are used to send emails.
  * The emails are sent from a victim to a list of victims.
+ *
+ * @author Loïc Frueh, Dejvid Muaremi
  */
 public class mailPranksGenerator {
     private static final Logger LOG = Logger.getLogger(mailPranksGenerator.class.getName());
