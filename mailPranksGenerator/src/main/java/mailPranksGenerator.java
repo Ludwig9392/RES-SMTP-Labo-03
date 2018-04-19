@@ -23,17 +23,26 @@ public class mailPranksGenerator {
          * better to use a Logger rather than using System.out.println
          */
         System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
+        IConfigManager configManager;
+        PrankGenerator prankGenerator;
+        List<Prank> pranks;
+        ISmtpClient smtpClient;
+        try {
+            configManager = new ConfigManager();
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Could not read the config file. {0}", e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+        
+        prankGenerator = new PrankGenerator(configManager);
+        pranks = prankGenerator.generatePranks();
+        smtpClient = new SmtpClient(configManager);
         
         try {
-            IConfigManager config = new ConfigManager();
-            PrankGenerator generator = new PrankGenerator(config);
-            List<Prank> pranks = generator.generatePranks();
-
-            ISmtpClient client = new SmtpClient(config);
             for (Prank prank : pranks) {
-                client.sendEmail(prank.toForgedMail());
+                smtpClient.sendEmail(prank.toForgedMail());
             }
-
         } catch (IOException e) {
             LOG.log(Level.SEVERE, "Could not send the pranks. {0}", e.getMessage());
             e.printStackTrace();
