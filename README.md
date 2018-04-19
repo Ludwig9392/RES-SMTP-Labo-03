@@ -10,8 +10,7 @@ This Repo globally implements a Mail Pranks Service
 
 ## Description of the project
 
-This project is about sending forged e-mail to multiple defined receivers. A forged e-mail is a mail that appears to be sent by someone but in reality it is sent by offten malicious poeple or little prankers. This project allow you to generate those forged mail automaticaly and sent 
-them to the choosen victims.
+This project is about sending forged e-mail to multiple defined receivers. A forged e-mail is a mail that appears to be sent by someone but in reality it is sent by offten malicious poeple or little prankers. This project allow you to generate those forged mail automaticaly and sent them to the choosen victims.
 
 ## Structure of the Project
 
@@ -64,7 +63,7 @@ So each line of this file is an e-mail you wanted to play your prank compaign on
 ### messages
 
 In this file, you need to write a list of messages you want to send in the pranked e-mails of your prank campaign.
-Just be sure to begin all your messages by "Subject: <insert the name of your subject>" with two new line caractère.
+Just be sure to begin all your messages by a subject "<insert the name of your subject>" with two new line caractère.
 When you have finished writing a message, add a new line and write "***" to serparate this message from the next message you will add.
 
 For all these cases there is already an example in the configuration files, so feel free to inspire you from that.

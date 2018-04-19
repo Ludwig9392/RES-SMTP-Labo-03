@@ -6,6 +6,7 @@ import model.mail.Mail;
 import java.io.*;
 import java.net.Socket;
 import java.util.logging.*;
+import java.util.Base64;
 
 /**
  * A SMTP client that can send e-mails through a SMTP server.
@@ -115,7 +116,10 @@ public class SmtpClient implements ISmtpClient {
         output.flush();
 
         LOG.log(Level.CONFIG,"body");
-        output.print(email.getMessage());
+        String[] subjectAndMessage = email.getMessage().split("\r\n|\r|\n", 2);
+        subjectAndMessage[0] = "=?utf-8?B?" + Base64.getEncoder().encode(subjectAndMessage[0].getBytes()) + "?=";
+        output.print(SmtpProtocol.SUBJECT + subjectAndMessage[0] + SmtpProtocol.RETURN);
+        output.print(subjectAndMessage[1]);
         output.flush();
     
         LOG.log(Level.CONFIG,"end");
